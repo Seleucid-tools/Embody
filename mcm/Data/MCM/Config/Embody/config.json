@@ -1,0 +1,116 @@
+{
+  "modName": "Embody",
+  "displayName": "Embody",
+  "minMcmVersion": 8,
+  "pages": [
+    {
+      "pageDisplayName": "Body Tuning",
+      "cursorFillMode": "topToBottom",
+      "content": [
+        { "text": "Anchor", "type": "header" },
+        {
+          "id": "iMode:Anchor",
+          "text": "Anchor Mode",
+          "help": "How the body is pinned to the camera. Head-pin (default) glues the head node to the eye for a natural look-down; Root XY-pin holds a fixed horizontal offset and is the most pitch-stable; Off disables the body-to-camera anchor entirely.",
+          "type": "stepper",
+          "valueOptions": {
+            "options": ["Off", "Root XY-pin", "Head-pin"],
+            "sourceType": "ModSettingInt"
+          }
+        },
+        {
+          "id": "iBodyScalePct:Anchor",
+          "text": "Body Scale",
+          "help": "Scales the visible body. Shrink it if you push the body low/forward and the feet clip through the floor.",
+          "type": "slider",
+          "valueOptions": { "min": 50, "max": 150, "step": 1, "formatString": "{0} %", "sourceType": "ModSettingInt" }
+        },
+        { "type": "empty" },
+
+        { "text": "Standing — Weapon Sheathed", "type": "header" },
+        { "id": "iStandSheathedFwd:Trims", "text": "Forward / Back", "help": "Move the body forward (+) or back (-) while standing with your weapon sheathed.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iStandSheathedLat:Trims", "text": "Right / Left", "help": "Move the body right (+) or left (-) while standing with your weapon sheathed.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iStandSheathedUp:Trims", "text": "Up / Down", "help": "Move the body up (+) or down (-) while standing with your weapon sheathed.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+
+        { "text": "Standing — Weapon Drawn", "type": "header" },
+        { "id": "iStandDrawnFwd:Trims", "text": "Forward / Back", "help": "Move the body forward (+) or back (-) while standing with your weapon drawn.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iStandDrawnLat:Trims", "text": "Right / Left", "help": "Move the body right (+) or left (-) while standing with your weapon drawn.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iStandDrawnUp:Trims", "text": "Up / Down", "help": "Move the body up (+) or down (-) while standing with your weapon drawn.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+
+        { "text": "Sneaking — Weapon Sheathed", "type": "header", "position": 1 },
+        { "id": "iSneakSheathedFwd:Trims", "text": "Forward / Back", "help": "Move the body forward (+) or back (-) while sneaking with your weapon sheathed.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iSneakSheathedLat:Trims", "text": "Right / Left", "help": "Move the body right (+) or left (-) while sneaking with your weapon sheathed.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iSneakSheathedUp:Trims", "text": "Up / Down", "help": "Move the body up (+) or down (-) while sneaking with your weapon sheathed.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+
+        { "text": "Sneaking — Weapon Drawn", "type": "header" },
+        { "id": "iSneakDrawnFwd:Trims", "text": "Forward / Back", "help": "Move the body forward (+) or back (-) while sneaking with your weapon drawn.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iSneakDrawnLat:Trims", "text": "Right / Left", "help": "Move the body right (+) or left (-) while sneaking with your weapon drawn.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iSneakDrawnUp:Trims", "text": "Up / Down", "help": "Move the body up (+) or down (-) while sneaking with your weapon drawn.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } }
+      ]
+    },
+
+    {
+      "pageDisplayName": "Feature Toggles",
+      "cursorFillMode": "topToBottom",
+      "content": [
+        { "text": "First-Person POV Locks", "type": "header" },
+        { "text": "Placeholder page — features are added over time.", "type": "text", "help": "Each toggle forces first person in a state that is normally third person. The switches save and persist now, but the behavior behind each one is still being built and turns on as it lands. Hover a toggle to see what it will cover." },
+        { "type": "empty" },
+
+        { "id": "bSittingFP:Features", "text": "Sitting / Furniture", "help": "Covers chairs, benches, thrones, and other furniture. When on, forces first person while seated. Coming soon — the toggle persists but is not active yet.", "type": "toggle", "valueOptions": { "sourceType": "ModSettingBool" } },
+        { "id": "bCraftingFP:Features", "text": "Crafting Stations", "help": "Covers forge, tanning rack, smelter, alchemy, enchanting, and cooking. When on, forces first person at crafting stations. Coming soon — the toggle persists but is not active yet.", "type": "toggle", "valueOptions": { "sourceType": "ModSettingBool" } },
+        { "id": "bMountedFP:Features", "text": "Mounted / Riding", "help": "Covers riding a horse. When on, forces first person while mounted. Coming soon — the toggle persists but is not active yet.", "type": "toggle", "valueOptions": { "sourceType": "ModSettingBool" } },
+        { "id": "bTransformFP:Features", "text": "Werewolf / Vampire Lord", "help": "Covers the Werewolf and Vampire Lord transformations. When on, forces first person while transformed. Coming soon — the toggle persists but is not active yet.", "type": "toggle", "valueOptions": { "sourceType": "ModSettingBool" } },
+        { "id": "bKillmoveFP:Features", "text": "Killmoves", "help": "Covers melee and ranged killmoves. Leave OFF to keep cinematic third-person kills (e.g. from Violens) untouched. Coming soon — the toggle persists but is not active yet.", "type": "toggle", "valueOptions": { "sourceType": "ModSettingBool" } }
+      ]
+    },
+
+    {
+      "pageDisplayName": "Transform Tuning",
+      "cursorFillMode": "topToBottom",
+      "content": [
+        { "text": "Transform Tuning — not yet implemented", "type": "header" },
+        { "text": "Mouse over for info", "type": "text", "help": "Body offsets for the Werewolf and Vampire Lord forms, for the future feature that forces first person while transformed (see Feature Toggles). Each form is a different skeleton, so each has its own trims. These values save now but do nothing yet — the transform body-ride is not built." },
+        { "type": "empty" },
+
+        { "text": "Werewolf", "type": "header" },
+        { "id": "iWerewolfFwd:TransformTrims", "text": "Forward / Back", "help": "Move the Werewolf body forward (+) or back (-). Not yet applied.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iWerewolfLat:TransformTrims", "text": "Right / Left", "help": "Move the Werewolf body right (+) or left (-). Not yet applied.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iWerewolfUp:TransformTrims", "text": "Up / Down", "help": "Move the Werewolf body up (+) or down (-). Not yet applied.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+
+        { "text": "Vampire Lord", "type": "header", "position": 1 },
+        { "id": "iVampireLordFwd:TransformTrims", "text": "Forward / Back", "help": "Move the Vampire Lord body forward (+) or back (-). Not yet applied.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iVampireLordLat:TransformTrims", "text": "Right / Left", "help": "Move the Vampire Lord body right (+) or left (-). Not yet applied.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } },
+        { "id": "iVampireLordUp:TransformTrims", "text": "Up / Down", "help": "Move the Vampire Lord body up (+) or down (-). Not yet applied.", "type": "slider", "valueOptions": { "min": -50, "max": 50, "step": 1, "sourceType": "ModSettingInt" } }
+      ]
+    },
+
+    {
+      "pageDisplayName": "Controls",
+      "cursorFillMode": "topToBottom",
+      "content": [
+        { "text": "Remap Hotkeys", "type": "header" },
+        { "id": "bHotkeysEnabled:Controls", "text": "Enable Tuning Hotkeys", "help": "OFF by default so Embody's keys can't clash with other mods or vanilla UI. Turn ON to tune the body live with the keys below; the bindings below are greyed out until you do. Everything the hotkeys do is also available on the Body Tuning page, so you can leave this off.", "type": "toggle", "groupControl": 1, "valueOptions": { "sourceType": "ModSettingBool" } },
+        { "text": "Mouse over for info", "type": "text", "help": "Click a binding, then press a key to rebind — changes apply immediately (the plugin reads the new scan code on the fly). The keys only work while 'Enable Tuning Hotkeys' is on; body-position keys act on the stance you are currently in." },
+        { "type": "empty" },
+
+        { "id": "iSave:Controls", "text": "Save Settings", "help": "Write the current live-tuned values to the config file so they persist across launches.", "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iAnchorMode:Controls", "text": "Cycle Anchor Mode", "help": "Cycle the anchor mode: Off -> Head-pin -> Root XY-pin -> Off.", "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "type": "empty" },
+
+        { "text": "Body Position", "type": "header" },
+        { "id": "iFwdPlus:Controls",  "text": "Body Forward", "help": "Nudge the body forward in the current stance.", "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iFwdMinus:Controls", "text": "Body Back",    "help": "Nudge the body back in the current stance.",    "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iLatMinus:Controls", "text": "Body Left",    "help": "Nudge the body left in the current stance.",    "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iLatPlus:Controls",  "text": "Body Right",   "help": "Nudge the body right in the current stance.",   "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iUpPlus:Controls",   "text": "Body Up",      "help": "Nudge the body up in the current stance.",      "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iUpMinus:Controls",  "text": "Body Down",    "help": "Nudge the body down in the current stance.",    "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "type": "empty" },
+
+        { "text": "Body Scale", "type": "header" },
+        { "id": "iScalePlus:Controls",  "text": "Scale Up (+1%)",   "help": "Grow the visible body by 1%.",   "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } },
+        { "id": "iScaleMinus:Controls", "text": "Scale Down (-1%)", "help": "Shrink the visible body by 1%.", "type": "keymap", "ignoreConflicts": true, "groupCondition": 1, "groupBehavior": "disable", "valueOptions": { "sourceType": "ModSettingInt" } }
+      ]
+    }
+  ]
+}

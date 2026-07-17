@@ -1,0 +1,23 @@
+# Build outputs — distributed via GitHub Releases, not tracked in the tree
+dist/
+*.dll
+*.log
+
+# Historical dev snapshots (kept locally, not for the public repo)
+ECPort_v*_golden.*
+ECPort_v*_stable.*
+*_golden.cpp
+*_golden.dll
+HelloEC*
+
+# Screenshots (raw captures + web exports); downscale.py is kept as a tool
+screenshots/raw/
+screenshots/web/
+
+# OS / scratch
+.DS_Store
+*.tmp
+
+# Reverse-engineering deep-dive notes — kept local, not published
+RENDER-mechanism.md
+SSE-addresses.md
