@@ -18,14 +18,16 @@ Oldrim kept a per-camera-node "POV flag" (a bit at `node+0x98`) and a sync funct
 first-person camera *and* a third-person body simultaneously. Enhanced Camera flipped that flag. **SSE deleted that
 mechanism** and replaced it with an explicit camera *state machine* (`kFirstPerson`, `kThirdPerson`, `kFurniture`,
 `kTween`, …). There is no flag to flip. That's why the straightforward port doesn't exist, and why the one successful
-SSE mod, Improved Camera, took a different route: it drives the *third-person* camera into a first-person position.
-The engine stays genuinely in third person — the state where the body already renders normally — while the view
-looks and feels first-person. That elegantly sidesteps the body-culling problem (below): by never leaving third
-person, the body is always in a state the engine draws.
+SSE mod, Improved Camera, took a different route. It also stays in true first person and shows the third-person
+body — but it moves the *camera* to the body: each frame it drives the camera onto the body's head/eye node so the
+view rides the animated body. Coupling the camera to the body is where head-bob comes from (Improved Camera smooths
+it and exposes it as settings), and because the body is left in its natural, engine-rendered position, Improved
+Camera doesn't have to fight the culling described below.
 
-Embody takes the opposite tack: it stays in the engine's actual first-person camera state and instead does two
-things: **show the third-person body under it, and stop the engine from culling that body.** The second half is the
-hard part and took most of the development effort.
+Embody takes the opposite tack: it leaves the *camera* alone — the stock first-person camera, untouched — and moves
+the *body* to it. That's what preserves vanilla first-person feel, but because the body is now displaced from where
+the engine naturally renders it, Embody has to do two things: **show the third-person body, and stop the engine from
+culling it.** The second half is the hard part and took most of the development effort.
 
 ---
 
@@ -101,9 +103,9 @@ faces only the per-node gates a `DynamicNode` child still sees — `kHidden`, th
 opaque). The result: the body **cannot** be room/portal-culled, with the true first-person camera fully intact.
 
 This is the SSE-native expression of Enhanced Camera's idea, reached through the engine's real mechanism rather than
-Oldrim's deleted POV flag. It is original to this port — Improved Camera solves the same problem a different way: by
-keeping the engine in third person (its repositioned third-person camera), the body stays in a state the engine
-already renders, so portal culling never comes into play. Two valid routes to the same result.
+Oldrim's deleted POV flag. It is original to this port. Improved Camera needs no equivalent: because it moves the camera to the body rather than
+the body to the camera, the body stays in its natural, engine-rendered position, so the culling this fix defeats
+never arises for it. Two valid routes, with different trade-offs.
 
 ---
 
