@@ -30,20 +30,15 @@ live-reloading INI; you just hand-edit `Data\MCM\Settings\Embody.ini` instead of
 3. Enable **Embody.esp** in your load order.
 4. Launch through SKSE. Open **System → Mod Configuration → Embody**.
 
-## The four pages
+## The two pages
 
-- **Body Tuning** — anchor mode, body scale, and the 12 per-stance offset sliders. These work today.
-- **Feature Toggles** — first-person POV locks (sitting / crafting / mounted / transform / killmove). **Placeholder**
-  page: the toggles save and persist, but the behaviors are still being built and turn on as they land. Killmove
-  defaults OFF (keeps cinematic third-person kills, e.g. Violens).
-- **Transform Tuning** — Werewolf / Vampire Lord body offsets. **Not yet implemented**: the sliders save but do
-  nothing until the transform body-ride exists. Set up now as its own page for that future feature.
+- **Body Tuning** — anchor mode, body scale, and the 12 per-stance offset sliders. This is what you'll use.
 - **Controls** — rebind every hotkey. The tuning hotkeys are **OFF by default** (so they can't clash with other
   mods); flip **Enable Tuning Hotkeys** on to use them. The 10 keybinds grey out while it's off.
 
 ## How it shares data with the plugin
 
-MCM Helper writes your choices to `Data\MCM\Settings\Embody.ini` with type-prefixed keys (`iMode`, `bKillmoveFP`,
+MCM Helper writes your choices to `Data\MCM\Settings\Embody.ini` with type-prefixed keys (`iMode`, `bHotkeysEnabled`,
 `iStandSheathedFwd`…). The Embody plugin reads that exact file and hot-reloads it (~1×/sec), so menu changes apply
 live without a relaunch. Keymap controls store DirectInput scan codes; the plugin bridges them to virtual-keys
 internally. One file, one source of truth — the menu and the plugin never disagree.

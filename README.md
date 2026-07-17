@@ -1,16 +1,16 @@
 # Embody — Enhanced Camera Emulated in SSE
 
-*A from-scratch, framework-light SKSE plugin that gives Skyrim SE Anniversary Edition a visible first-person
-body — the [Enhanced Camera](https://www.nexusmods.com/skyrim/mods/57859) (Oldrim, by LogicDragon) experience,
-re-derived for the 64-bit engine. **Embody** is what the mod does — it gives your first-person view a body;
-**Enhanced Camera Emulated** is the goal it's chasing (parity with the original), not yet fully reached.*
+*A from-scratch, framework-light SKSE plugin that gives Skyrim SE / Anniversary Edition a permanent first-person
+body: look down and see your own chest, arms, and legs. It uses the [Enhanced Camera](https://www.nexusmods.com/skyrim/mods/57859)
+(Oldrim, by LogicDragon) approach — move the body to the camera, not the camera to the body — which makes it
+**architecturally distinct from Improved Camera**. This repository is both a working mod and a documented reference
+for how that's done on the 64-bit engine.*
 
-> **Version 0.54 — a small, working, deliberately unfinished mod, released as open source.** This repository *is* the
-> whole thing: the plugin source, the documentation on how it works, and a ready-to-build mod. If you're a **player**,
-> [Improved Camera SE](https://www.nexusmods.com/skyrimspecialedition/mods/93962) is the mature, polished,
-> feature-complete choice and almost certainly what you want. Embody is here mostly for the **curious and the
-> tinkerers** — anyone who wants to see how a first-person body is built from scratch on a modern engine, and maybe
-> carry the idea somewhere better. See the [Roadmap](#roadmap) for what a 1.0 would take.
+> **What this is.** A permanent first-person body for Skyrim SE / AE, built from scratch as a compact, documented
+> resource. It does one thing — puts your body in first person while you're on foot — using an approach that's
+> architecturally different from Improved Camera. If you're a **player**, [Improved Camera SE](https://www.nexusmods.com/skyrimspecialedition/mods/93962)
+> is the mature, feature-complete choice and what you want. Embody is here for the **curious and the tinkerers**:
+> read how it works, build on it, take the idea somewhere new.
 
 ---
 
@@ -18,8 +18,8 @@ re-derived for the 64-bit engine. **Embody** is what the mod does — it gives y
 
 There's already an excellent one — [Improved Camera SE](https://www.nexusmods.com/skyrimspecialedition/mods/93962).
 Embody is not a replacement so much as a **different approach with a different feel**, and it's fair to say up front
-that Improved Camera is the more mature, more feature-complete mod today (it handles horses, dragons, werewolves,
-killmoves, and scripted scenes that Embody does not — yet).
+that Improved Camera is the more mature, more feature-complete mod (it handles horses, dragons, werewolves,
+killmoves, and scripted scenes that Embody does not).
 
 The one-line difference:
 
@@ -33,8 +33,8 @@ Bethesda ships — stays exactly as-is, and the *body* is moved to meet it each 
 coupled to the body, it keeps stock first-person feel while you gain a body. That's Enhanced Camera's design
 philosophy — body-to-camera, not camera-to-body — re-derived for SSE's very different engine internals.
 
-If you love vanilla first-person camera feel and just want a body under it, Embody is for you. If you want the
-broadest state coverage today, Improved Camera is more complete. They are mutually exclusive — pick one.
+If you love vanilla first-person camera feel and just want a body under it, this approach is for you. If you want
+broad state coverage, Improved Camera is the complete option. They are mutually exclusive — pick one.
 
 ---
 
@@ -80,10 +80,8 @@ Install with your mod manager (MO2 / Vortex) like any SKSE plugin, or drop `Embo
 All settings live in `Data/MCM/Settings/Embody.ini`, which the plugin **hot-reloads live** — edit and save, and the
 body updates within about a second, no relaunch. The file is created for you on first launch. Configure it three ways:
 
-**In-game menu (recommended)** — with SkyUI + MCM Helper installed: pause → Mod Configuration → **Embody**. Four pages:
+**In-game menu (recommended)** — with SkyUI + MCM Helper installed: pause → Mod Configuration → **Embody**. Two pages:
 - **Body Tuning** — anchor mode, body scale, and per-stance offset sliders. *The settings you'll actually use.*
-- **Feature Toggles** — planned first-person states (placeholders for now; see [Roadmap](#roadmap)).
-- **Transform Tuning** — Werewolf / Vampire Lord offsets (for a future feature).
 - **Controls** — enable and rebind the optional tuning hotkeys.
 
 **Hand-edit the INI** — every key is documented in the `settings.ini` that ships with the mod. Needs no SkyUI.
@@ -118,31 +116,18 @@ keys rebindable in the MCM — the defaults are:
   **If it's wrong, the failure is graceful — the body won't appear, it will not crash** (the hooks verify their
   target bytes and bail safely on a mismatch). If you're on GOG, please report whether it works.
 
-## Known limitations
+## Scope & known limitations
+
+**Scope:** Embody puts your body in first person while you're **on foot** (standing and sneaking, weapon drawn or
+sheathed). States that are normally third person — sitting, crafting, mounted, killmoves, Vampire Lord / Werewolf —
+are left as stock third person; Embody steps aside there rather than forcing first person. That's the defined scope,
+not a bug. (It's also where the architecture could be extended, if you're reading this to build on it.)
+
+Within that scope, the known rough edges:
 
 - **1-frame flicker** when opening/closing the **Tween menu** (TAB) — an engine frame-ordering artifact at a menu
   boundary. Minor; the body is otherwise stable while the menu is open.
-- **No forced first-person in third-person states yet** — sitting, crafting, mounted riding, killmoves, and form
-  transforms (Vampire Lord / Werewolf) currently play in vanilla third person. First-person versions of these
-  (opt-in, per-state) are planned. It does *not* misbehave in these states; it just doesn't force first person.
-- **Head/arm hiding uses bone scaling**, so the body's shadow is currently headless. Being reworked.
-
----
-
-## Roadmap
-
-**1.0 = full Enhanced Camera parity.** Embody currently shows the body in the states that are *already* first-person
-(standing, sneaking). The rest of the work is bringing first person to states that are normally third-person, roughly
-in order:
-
-1. Sitting / furniture
-2. Crafting stations (forge, alchemy, enchanting, …)
-3. Mounted (horseback)
-4. Killmoves (off by default — Violens-safe)
-5. Werewolf / Vampire Lord
-
-Placeholder toggles for these already exist in the MCM, so the plumbing is in place; each switches on as it lands.
-Feedback on what to prioritize is welcome — open an issue.
+- **Head/arm hiding uses bone scaling**, so the body's shadow is headless.
 
 ---
 

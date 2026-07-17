@@ -70,10 +70,6 @@ static float g_trim[4][3] = {
 };
 static const char* g_trimName[4] = { "stand-sheathed", "stand-DRAWN", "sneak-sheathed", "sneak-DRAWN" };
 static int g_lastState = 0;                  // pose state as of last anchor frame (keys edit this set)
-// Transform-form body trims (Werewolf / Vampire Lord) — FUTURE FEATURE (Capability B: forced first person while
-// transformed). Read and persisted now for a complete config round-trip, but NOT applied yet (no transform-state
-// body-ride exists). Different skeletons entirely, so each form gets its own trim set. [form][axis]: 0=Werewolf 1=VL.
-static float g_xformTrim[2][3] = { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } };
 // Body scale (Insert/Delete, 1% steps): lets users who trim the body lower/forward shrink it so the feet
 // don't clip the floor (body root is at ground level, so scaling pulls the head down, feet stay planted).
 static float g_bodyScale = 0.92f;            // user-tuned default 2026-07-16 (pairs with the sheathed trim)
@@ -144,15 +140,6 @@ static int dxToVk(int dx) {
         default: return 0;
     }
 }
-// --- Feature toggles ([Features] in the INI; MCM "Feature Toggles" page) ----------------------------------------
-// PLACEHOLDERS for Capability B (force first person in states that are vanilla third person). The plugin reads and
-// persists them now so the MCM wiring is proven end-to-end, but the behaviors behind them are not built yet — each
-// flips on as its per-state FP lock lands. Killmove defaults OFF so cinematic third-person kills (Violens) are safe.
-static int g_featSitting   = 0;      // first person while sitting / in furniture
-static int g_featCrafting  = 0;      // first person at crafting stations (forge, alchemy, enchanting...)
-static int g_featMounted   = 0;      // first person while mounted (horse)
-static int g_featTransform = 0;      // first person as Vampire Lord / Werewolf
-static int g_featKillmove  = 0;      // first person during killmoves (default OFF — leave cinematic kills alone)
 // Effect-shader redirection (Stoneflesh teal, Muffle shimmer...): the engine picks which player model gets the
 // shader by reading PlayerCharacter.playerFlags.isInThirdPersonMode (byte @ +0xBE3 bit0 on 1.6.1170). While in
 // true first person we briefly set it around the effect-attach calls so the shader lands on the visible BODY
@@ -714,7 +701,7 @@ static int ecAtoi(const char* s) {
     return sign * v;
 }
 // Config lives at Data\MCM\Settings\Embody.ini — MCM Helper's own user-settings path — so the in-game MCM and this
-// plugin read/write ONE file (no divergence). Prefixed keys (iMode, bKillmoveFP...) match MCM Helper's typed store.
+// plugin read/write ONE file (no divergence). Prefixed keys (iMode, bHotkeysEnabled...) match MCM Helper's typed store.
 // Without SkyUI/MCM Helper installed the plugin still owns this file: it self-seeds it (SKSEPlugin_Load) and hand
 // edits / the Home-save hotkey write here too. ensureIniDir() creates the folder when MCM Helper isn't there to.
 static void iniPath(char* out) {                            // <gamedir>\Data\MCM\Settings\Embody.ini
@@ -750,20 +737,14 @@ static uint64_t iniMtimeNow() {                             // 0 if the file doe
 }
 static const char* const g_stateKey[4] = { "StandSheathed", "StandDrawn", "SneakSheathed", "SneakDrawn" };
 static const char* const g_axisKey[3]  = { "Fwd", "Lat", "Up" };
-static const char* const g_xformKey[2] = { "Werewolf", "VampireLord" };
 // MCM Helper key = type-prefix + name; trims are ints -> "i" + <state> + <axis>  (e.g. iStandSheathedFwd)
 static void trimKey(char* out, int st, int ax) { lstrcpynA(out, "i", 40); lstrcatA(out, g_stateKey[st]); lstrcatA(out, g_axisKey[ax]); }
-static void xformKey(char* out, int f, int ax) { lstrcpynA(out, "i", 40); lstrcatA(out, g_xformKey[f]);  lstrcatA(out, g_axisKey[ax]); }
 static void readIni() {                                     // INI overrides compiled defaults (keys = MCM-typed)
     g_anchorMode = iniGetInt("Anchor", "iMode", g_anchorMode);
     g_bodyScale  = (float)iniGetInt("Anchor", "iBodyScalePct", (int)(g_bodyScale * 100.0f + 0.5f)) / 100.0f;
     for (int s = 0; s < 4; ++s) for (int a = 0; a < 3; ++a) {
         char key[40]; trimKey(key, s, a);
         g_trim[s][a] = (float)iniGetInt("Trims", key, (int)g_trim[s][a]);
-    }
-    for (int f = 0; f < 2; ++f) for (int a = 0; a < 3; ++a) {   // transform trims (future feature; read for round-trip)
-        char key[40]; xformKey(key, f, a);
-        g_xformTrim[f][a] = (float)iniGetInt("TransformTrims", key, (int)g_xformTrim[f][a]);
     }
     // [Controls]: remappable hotkeys as DIK scan codes (MCM keymap writes these; dxToVk bridges to GetAsyncKeyState).
     g_keySave       = iniGetInt("Controls", "iSave",       g_keySave);
@@ -777,12 +758,6 @@ static void readIni() {                                     // INI overrides com
     g_keyScalePlus  = iniGetInt("Controls", "iScalePlus",  g_keyScalePlus);
     g_keyScaleMinus = iniGetInt("Controls", "iScaleMinus", g_keyScaleMinus);
     g_hotkeysEnabled = iniGetInt("Controls", "bHotkeysEnabled", g_hotkeysEnabled);
-    // [Features]: placeholder POV-lock toggles (Capability B). Read/persisted now; behavior lands per-state later.
-    g_featSitting   = iniGetInt("Features", "bSittingFP",   g_featSitting);
-    g_featCrafting  = iniGetInt("Features", "bCraftingFP",  g_featCrafting);
-    g_featMounted   = iniGetInt("Features", "bMountedFP",   g_featMounted);
-    g_featTransform = iniGetInt("Features", "bTransformFP", g_featTransform);
-    g_featKillmove  = iniGetInt("Features", "bKillmoveFP",  g_featKillmove);
 }
 static void writeIni() {                                    // persist current live values (keys = MCM-typed)
     ensureIniDir();                                         // make Data\MCM\Settings\ if MCM Helper isn't installed
@@ -792,11 +767,7 @@ static void writeIni() {                                    // persist current l
         char key[40]; trimKey(key, s, a);
         iniSetInt("Trims", key, (int)g_trim[s][a]);
     }
-    for (int f = 0; f < 2; ++f) for (int a = 0; a < 3; ++a) {   // transform trims (future feature)
-        char key[40]; xformKey(key, f, a);
-        iniSetInt("TransformTrims", key, (int)g_xformTrim[f][a]);
-    }
-    // [Controls] + [Features]: written so the MCM/INI round-trips cleanly and the file self-documents current binds.
+    // [Controls]: written so the MCM/INI round-trips cleanly and the file self-documents current binds.
     iniSetInt("Controls", "iSave",       g_keySave);
     iniSetInt("Controls", "iAnchorMode", g_keyAnchorMode);
     iniSetInt("Controls", "iFwdPlus",    g_keyFwdPlus);
@@ -808,11 +779,6 @@ static void writeIni() {                                    // persist current l
     iniSetInt("Controls", "iScalePlus",  g_keyScalePlus);
     iniSetInt("Controls", "iScaleMinus", g_keyScaleMinus);
     iniSetInt("Controls", "bHotkeysEnabled", g_hotkeysEnabled);
-    iniSetInt("Features", "bSittingFP",   g_featSitting);
-    iniSetInt("Features", "bCraftingFP",  g_featCrafting);
-    iniSetInt("Features", "bMountedFP",   g_featMounted);
-    iniSetInt("Features", "bTransformFP", g_featTransform);
-    iniSetInt("Features", "bKillmoveFP",  g_featKillmove);
     g_iniMtime = iniMtimeNow();                             // adopt our own write so the poll doesn't reload it back
     LogLine("[Embody] saved config to Embody.ini\r\n");
 }
