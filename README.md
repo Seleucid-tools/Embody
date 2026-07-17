@@ -2,9 +2,9 @@
 
 *A from-scratch, framework-light SKSE plugin that gives Skyrim SE / Anniversary Edition a permanent first-person
 body: look down and see your own chest, arms, and legs. It uses the [Enhanced Camera](https://www.nexusmods.com/skyrim/mods/57859)
-(Oldrim, by LogicDragon) approach — move the body to the camera, not the camera to the body — which makes it
-**architecturally distinct from Improved Camera**. This repository is both a working mod and a documented reference
-for how that's done on the 64-bit engine.*
+(Oldrim, by LogicDragon) approach — move the body to meet the camera rather than the camera to the body —
+implemented from scratch for the 64-bit engine. This repository is both a working mod and a documented reference
+for how that's done.*
 
 > **What this is.** A permanent first-person body for Skyrim SE / AE, built from scratch as a compact, documented
 > resource. It does one thing — puts your body in first person while you're on foot — using an approach that's
