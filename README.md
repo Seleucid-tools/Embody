@@ -5,8 +5,12 @@ body — the [Enhanced Camera](https://www.nexusmods.com/skyrim/mods/57859) (Old
 re-derived for the 64-bit engine. **Embody** is what the mod does — it gives your first-person view a body;
 **Enhanced Camera Emulated** is the goal it's chasing (parity with the original), not yet fully reached.*
 
-> **Players:** download the packaged, ready-to-install mod on **[Nexus Mods](https://www.nexusmods.com/skyrimspecialedition "link coming after publish")** *(link coming once published)*. This repository is the source code.
-> **Version 0.54** — an early but stable public release (standing & sneaking body work today). See the [Roadmap](#roadmap) for what's planned.
+> **Version 0.54 — a small, working, deliberately unfinished mod, released as open source.** This repository *is* the
+> whole thing: the plugin source, the documentation on how it works, and a ready-to-build mod. If you're a **player**,
+> [Improved Camera SE](https://www.nexusmods.com/skyrimspecialedition/mods/93962) is the mature, polished,
+> feature-complete choice and almost certainly what you want. Embody is here mostly for the **curious and the
+> tinkerers** — anyone who wants to see how a first-person body is built from scratch on a modern engine, and maybe
+> carry the idea somewhere better. See the [Roadmap](#roadmap) for what a 1.0 would take.
 
 ---
 
