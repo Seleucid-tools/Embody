@@ -211,6 +211,5 @@ instance targets one model, so it's arms-or-body per weapon state, not both — 
   instant-CTD-on-spellcast: spell cast-art and particle nodes aren't `NiNode`s, and reading their memory as a
   children array crashes. Never recurse a scene subtree without it.
 
-Full night-by-night development history, including every approach that *didn't* work and why, is in the project
-memory file referenced by `START-HERE.md`. The raw Ghidra decompilations that cracked the render fix are
-`ghidra_render.txt`, `ghidra_cull.txt`, `ghidra_gate.txt`, and `RENDER-mechanism.md`.
+The design principles above, plus the offset tables in `Embody.cpp` itself, are enough to understand and extend the
+plugin. The deeper reverse-engineering notes that produced them are kept out of this repository by choice.
