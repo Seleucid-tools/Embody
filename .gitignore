@@ -21,3 +21,6 @@ screenshots/web/
 # Reverse-engineering deep-dive notes — kept local, not published
 RENDER-mechanism.md
 SSE-addresses.md
+
+# Internal dev handoff (stale + raw addresses) — kept local, not published
+START-HERE.md

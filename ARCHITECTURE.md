@@ -2,8 +2,7 @@
 
 This is the deep explanation of *how* and *why* Embody works, for anyone maintaining or forking it. It assumes you
 can read C and have a rough idea of SKSE plugins and the Skyrim (Creation Engine / Gamebryo-descended) scene graph.
-If you just want to build and use the mod, see `README.md`. If you're an agent picking up development, read
-`START-HERE.md` first for the fast orientation, then this.
+If you just want to build and use the mod, see `README.md`.
 
 Target: **Steam Anniversary Edition 1.6.1170** (and, via the Address Library, other 1.6.x runtimes including GOG).
 
@@ -47,7 +46,7 @@ because SKSE itself hooks some of the same entries — hooking an interior call 
   reuse to force-refresh the skeleton — see §4.)
 
 The camera state id lives at `[[TESCamera + 0x28] + 0x18]` (current state → id). The states we care about:
-`0 = kFirstPerson`, `5 = kFurniture`, `7 = kTween`, `9 = kThirdPerson` (full enum in the code and `START-HERE.md`).
+`0 = kFirstPerson`, `5 = kFurniture`, `7 = kTween`, `9 = kThirdPerson` (full enum in the code).
 
 ---
 

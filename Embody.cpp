@@ -14,7 +14,7 @@
 //   * UpdateCamera call site   -> Hook_UpdateCamera:      per-frame camera-state tracking, tuning hotkeys, cleanup,
 //                                                          Tween-menu body-hold.
 //   * UpdateFirstPerson call site -> Hook_UpdateFirstPerson: the body-ride (correctly-timed, late-frame).
-// Full design writeup: ARCHITECTURE.md.  Fast dev/agent orientation: START-HERE.md.
+// Full design writeup: ARCHITECTURE.md.
 
 #include <cstdint>
 #include <windows.h>
@@ -792,7 +792,7 @@ extern "C" __declspec(dllexport) bool SKSEPlugin_Load(const void* skse) {
         LogLine("[Embody] FATAL: Address Library versionlib not found (Data/SKSE/Plugins/versionlib-*.bin). Is Address Library installed?\r\n");
         return false;
     }
-    // RelocationIDs, order MUST match the enum below. See START-HERE.md for the full name<->id table. To add a
+    // RelocationIDs, order MUST match the enum below (each id's purpose is the enum name). To add a
     // feature that needs a new engine address: add its id here + a matching enum entry, bump the count — never
     // hardcode an RVA. (This is the version-independence discipline: everything flows through the Address Library.)
     static const uint64_t IDS[10] = { 19735,50832,50784,40522,34913,403521,400802,390951,252901,254646 };

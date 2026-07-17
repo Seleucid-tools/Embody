@@ -129,7 +129,7 @@ x86_64-w64-mingw32-g++ -shared -O2 -nostdlib -Wl,--entry,DllMain -o Embody.dll E
 **Logging:** the default build writes diagnostics to `C:\Embody.log`. Release builds pass `-DEMBODY_LOG=0`
 (via `package.sh --release`) to compile logging out entirely, so the published DLL is silent and writes no files.
 
-Deep-dive on how it works: `ARCHITECTURE.md`. Developer/agent orientation: `START-HERE.md`.
+Deep-dive on how it works: `ARCHITECTURE.md`.
 
 ---
 
