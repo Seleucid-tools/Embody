@@ -14,48 +14,6 @@ for how that's done on the 64-bit engine.*
 
 ---
 
-## Why another first-person body mod? (Embody vs. Improved Camera)
-
-There's already an excellent one — [Improved Camera SE](https://www.nexusmods.com/skyrimspecialedition/mods/93962).
-Embody is not a replacement so much as a **different approach with a different feel**, and it's fair to say up front
-that Improved Camera is the more mature, more feature-complete mod (it handles horses, dragons, werewolves,
-killmoves, and scripted scenes that Embody does not).
-
-The one-line difference:
-
-> **Improved Camera couples the *camera* to the body. Embody couples the *body* to the camera.**
-
-Improved Camera repositions the camera each frame to ride your animated body — robust and full-featured, but because
-the camera is driven *by* the body, it inherits the body's motion (head-bob) and can feel "attached to" the character.
-
-Embody **never touches Skyrim's first-person camera at all.** The vanilla camera — same pivot, same smoothing
-Bethesda ships — stays exactly as-is, and the *body* is moved to meet it each frame. Because the camera is never
-coupled to the body, it keeps stock first-person feel while you gain a body. That's Enhanced Camera's design
-philosophy — body-to-camera, not camera-to-body — re-derived for SSE's very different engine internals.
-
-If you love vanilla first-person camera feel and just want a body under it, this approach is for you. If you want
-broad state coverage, Improved Camera is the complete option. They are mutually exclusive — pick one.
-
----
-
-## Features
-
-- **Visible first-person body** — look down and see your chest, arms, legs, and feet, planted on the ground.
-- **Vanilla camera, untouched** — no head-bob added, no camera reinvention. Stock first-person feel.
-- **Weapon-aware arms** — hi-fidelity first-person arms when your weapon is drawn; your body's own arms when sheathed.
-- **Fully tunable body position** — per-stance body offsets (standing/sneaking × sheathed/drawn), body scale, and
-  anchor mode, set through an in-game **MCM menu** or a plain **INI** (hot-reloaded live), with optional hotkeys.
-  Dial it to your character, animations, and FOV.
-- **Magic effect shaders on the body** — Stoneflesh, Muffle, etc. render on the visible body.
-- **Rock-solid rendering** — the body does not vanish at room transitions, on stairs, mid-cast, or during POV
-  switches. (This was the hard part; see `ARCHITECTURE.md`.)
-- **Non-breaking everywhere else** — in states Embody doesn't handle (third person, VATS killmoves, transforms,
-  mounted), it steps aside and you get stock Skyrim. It never steals the camera from other mods.
-- **Update-resilient** — resolves all engine addresses at load through the Address Library, so it survives the
-  address shifts of most Bethesda updates automatically (see Compatibility).
-
----
-
 ## Requirements
 
 **Required:**
